@@ -1,0 +1,4 @@
+<div *ngIf="initialToken">
+  <button class="btn btn-info btn-sm" (click)="previous()" [disabled]="tokenList.length === 2">Previous</button>
+  <button class="btn btn-info btn-sm" (click)="next()" [disabled]="lastTokenUndefined">Next</button>
+</div>

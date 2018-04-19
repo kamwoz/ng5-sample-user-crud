@@ -1,0 +1,19 @@
+.custab {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 10px 0;
+    box-shadow: 3px 3px 2px #ccc;
+    transition: 0.5s;
+}
+.custab:hover {
+    box-shadow: 3px 3px 0px transparent;
+    transition: 0.5s;
+}
+
+.action-cell {
+    cursor: default;
+}
+
+cognito-pagination {
+    float: right;
+}

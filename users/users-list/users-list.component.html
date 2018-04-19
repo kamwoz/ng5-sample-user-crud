@@ -1,0 +1,46 @@
+<div class="row col-md-10 col-md-offset-1 custyle">
+  <a routerLink="/user/create" class="btn btn-primary btn-xs pull-right"><b>+</b> {{'users.add_new_user'|translate}}</a>
+  <br>
+  <table class="table table-striped custab">
+    <thead>
+      <tr>
+        <th>{{ 'user.email' | translate }}</th>
+        <th>{{ 'user.name' | translate }}</th>
+        <th>{{ 'user.gender.title' | translate }}</th>
+        <th>{{ 'user.role' | translate }}</th>
+        <th class="text-center">{{ 'global.action' | translate }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users" (click)="showUser($event, user.sub)" class="clickable">
+        <td>{{ user.email }}</td>
+        <td>{{ fullName(user) }}</td>
+        <td>{{ dictionaryService.getGenderLabel(dictionaries.gender, user.gender_id)|translate }}</td>
+        <td>{{ dictionaryService.getRoleLabel(dictionaries.role, user.role_id)|translate }}</td>
+        <td class="text-center action-cell">
+          <button
+            class="btn btn-warning btn-xs"
+            mwlConfirmationPopover
+            [popoverTitle]="'user.reset_password'|translate"
+            [popoverMessage]="'user.are_you_sure'|translate"
+            (confirm)="resetPassword(user)"
+            placement="left">
+            {{'user.reset_password'|translate}}
+          </button>
+          <a class='btn btn-info btn-xs' routerLink="/user/edit/{{user.sub}}">
+            <span class="glyphicon glyphicon-edit"></span> {{'global.edit'|translate}}
+          </a>
+          <a class="btn btn-danger btn-xs"
+             mwlConfirmationPopover
+             [popoverTitle]="'Delete user'"
+             [popoverMessage]="'Are you sure?'"
+             (confirm)="deleteUser(user.sub)"
+             placement="left">
+            <span class="glyphicon glyphicon-remove"></span> {{'global.delete'|translate}}
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <cognito-pagination [initialToken]="initialPaginationToken"></cognito-pagination>
+</div>

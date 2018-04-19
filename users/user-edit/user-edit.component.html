@@ -1,0 +1,91 @@
+<div class="col-xs-12 col-md-6 col-md-offset-3 user-edit">
+  <form [formGroup]="form">
+    <div class="form-group">
+      <label for="first_name">{{ 'user.first_name' | translate }}</label>
+      <input type="text" class="form-control" id="first_name" [(ngModel)]="user.first_name" name="first_name" formControlName="first_name">
+
+      <div class="form-control-feedback" *ngIf="form.controls['first_name'].errors && (form.controls['first_name'].dirty || form.controls['first_name'].touched)">
+        <p [hidden]="!form.controls['first_name'].errors.required">{{ 'validator.required' | translate }}</p>
+        <p [hidden]="!form.controls['first_name'].errors.minlength">{{ 'validator.min_length' | translate }}</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="last_name">{{ 'user.last_name' | translate }}</label>
+      <input type="text" class="form-control" id="last_name" [(ngModel)]="user.last_name" name="last_name" formControlName="last_name">
+
+      <div class="form-control-feedback" *ngIf="form.controls['last_name'].errors && (form.controls['last_name'].dirty || form.controls['last_name'].touched)">
+        <p [hidden]="!form.controls['last_name'].errors.required">{{ 'validator.required' | translate }}</p>
+        <p [hidden]="!form.controls['last_name'].errors.minlength">{{ 'validator.min_length' | translate }}</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">{{ 'user.email' | translate }}</label>
+      <input type="text" class="form-control" id="email" [ngModel]="user.email" (ngModelChange)="onEmailChanged($event)" name="email" formControlName="email">
+
+      <div class="form-control-feedback" *ngIf="form.controls['email'].errors && (form.controls['email'].dirty || form.controls['email'].touched)">
+        <p [hidden]="!form.controls['email'].errors.required">{{ 'validator.required' | translate }}</p>
+        <p [hidden]="!form.controls['email'].errors.invalidEmailAddress">{{ 'validator.email_required' | translate }}</p>
+      </div>
+    </div>
+
+    <div class="form-group" *ngIf="!isInEditMode">
+      <label for="password">{{ 'user.password' | translate }}</label>
+      <input formControlName="password" type="password" class="form-control" id="password" [(ngModel)]="user.password" name="password">
+
+      <div class="form-control-feedback" *ngIf="form.controls['password'].errors && (form.controls['password'].dirty || form.controls['password'].touched)">
+        <p [hidden]="!form.controls['password'].errors.required">{{ 'validator.required' | translate }}</p>
+        <p [hidden]="!form.controls['password'].errors.minlength">{{ 'validator.min_length' | translate }}</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field>
+        <input matInput [matDatepicker]="picker" [placeholder]="'user.birthday'|translate"
+               [(ngModel)]="user.birth_date" name="birthday"
+               [ngModelOptions]="{standalone: true}">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker touchUi="true" #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <mat-select [placeholder]="'user.purpose' | translate"
+                    [(ngModel)]="user.purpose_id" name="purpose"
+                    [ngModelOptions]="{standalone: true}">
+          <mat-option *ngFor="let purpose of dictionaries.purpose" [value]="purpose.id">
+            {{purpose.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <mat-select [placeholder]="'user.gender.title' | translate"
+                    [(ngModel)]="user.gender_id" name="gender"
+                    [ngModelOptions]="{standalone: true}">
+          <mat-option *ngFor="let gender of dictionaries.gender" [value]="gender.id">
+            {{('user.gender.' + gender.value)|translate}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field>
+        <mat-select [placeholder]="'user.role'|translate" [(value)]="user.role_id" name="roles">
+          <mat-option *ngFor="let role of dictionaries.role" [value]="role.id">
+            {{('user.roles.' + role.value)|translate}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="form-action-buttons">
+      <a class="btn btn-danger" routerLink="/users">{{ 'global.cancel' | translate }}</a>
+
+      <button class="btn btn-primary" (click)="onSubmit()" [disabled]="!form.valid">{{ 'global.submit' | translate }}</button>
+    </div>
+  </form>
+</div>
